@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {collection, getDocs, deleteDoc, doc} from "firebase/firestore";
 import {db} from "../firebase-config";
 import Storybook from "./Storybook";
-import {Col, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 
 function Library() {
     const [storyList, setStoryList] = useState([]);
@@ -27,7 +27,25 @@ function Library() {
     return (
         <>
             <h3>Library</h3>
-            
+                <Form>
+                    <Row>
+                        <InputGroup as={Col} >
+                            <InputGroup.Text id="basic-addon1">🔍</InputGroup.Text>
+                            <Form.Control type="text" placeholder="Search the library"/>
+                            <Button variant="outline-primary" id="button-addon2">
+                                Search
+                            </Button>
+                        </InputGroup>
+                        <Form.Group as={Col} xs={2} controlId="formGridState">
+                            <Form.Select defaultValue="Sort by">
+                                <option>Sort by</option>
+                                <option>Newest</option>
+                                <option>Most Liked</option>
+                            </Form.Select>
+                        </Form.Group>
+                    </Row>
+
+                </Form>
 
                 <Row>
                     <Col><Storybook/></Col>
