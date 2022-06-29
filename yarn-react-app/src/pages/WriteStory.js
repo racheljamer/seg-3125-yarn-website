@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Container} from "react-bootstrap";
+import {Button, ButtonToolbar, Col, Container, Form, Row} from "react-bootstrap";
 import {addDoc, collection} from "firebase/firestore";
 import {db, auth} from "../firebase-config";
 import {useNavigate} from "react-router-dom";
@@ -9,6 +9,7 @@ function WriteStory({isAuth}) {
     //states!
     const [title, setTitle] = useState("");
     const [storyText, setStoryText] = useState("");
+    const [year, setYear] = useState("");
 
     let navigate = useNavigate();
 
@@ -18,7 +19,8 @@ function WriteStory({isAuth}) {
         await addDoc(storiesCollectionRef, {
             title,
             storyText,
-            author: {name: auth.currentUser.displayName, id:auth.currentUser.uid}
+            author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
+            year
         });
         navigate("/");
     };
@@ -30,26 +32,50 @@ function WriteStory({isAuth}) {
 
     }, [])
     return (
-            <Container>
-                <h1>Write a Story</h1>
-                <div>
-                    <label> Title:</label>
-                    <input placeholder="Enter a catchy title!"
-                           onChange={(event) => {
-                            setTitle(event.target.value);
-                           }}
-                    />
-                </div>
-               <div>
-                   <label> Story:</label>
-                   <textarea
-                       placeholder="Tell your story."
-                       onChange={(event) => {
-                       setStoryText(event.target.value);
-                       }}
-                   />
-               </div>
-                <Button onClick={createPost}>Submit Story</Button>
+            <Container className="px-5">
+                <h3 className="mt-5 mb-3">Tell your story</h3>
+                <Form>
+                    <h5 className="mb-2">Details</h5>
+                    <Row className="mb-3">
+                        <Form.Group as={Col}>
+                            <Form.Label>Title</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="Enter a catchy title!"
+                                className="mb-3"
+                                onChange={(event) => {
+                                    setTitle(event.target.value);
+                                }}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} xs={2} controlId="formGridCity">
+                            <Form.Label>Year</Form.Label>
+                            <Form.Control
+                                type="text"
+                                placeholder="yyyy"
+                                onChange={(event) => {
+                                    setYear(event.target.value);
+                                }}
+                            />
+                        </Form.Group>
+                    </Row>
+                    <Form.Group>
+                        <Form.Label as={"h5"}>Story</Form.Label>
+                        <Form.Control
+                            as="textarea" rows={8}
+                            placeholder="Tell your story."
+                            className="mb-3"
+                            onChange={(event) => {
+                                setStoryText(event.target.value);
+                            }}
+                        />
+                    </Form.Group>
+                    <ButtonToolbar>
+                        <Button>Upload Images</Button>
+                        <Button>Save Draft</Button>
+                        <Button onClick={createPost}>Publish</Button>
+                    </ButtonToolbar>
+                </Form>
             </Container>
     );
 }
