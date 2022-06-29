@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {Container} from "react-bootstrap";
 import {collection, getDocs, deleteDoc, doc} from "firebase/firestore";
-import {auth, db} from "../firebase-config";
-import About from "../Components/About";
-import Library from "../Components/Library";
+import {db} from "../firebase-config";
+import Storybook from "./Storybook";
+import {Col, Container, Row} from "react-bootstrap";
 
-function Home({isAuth}) {
+function Library() {
     const [storyList, setStoryList] = useState([]);
     const storiesCollectionRef = collection(db, "stories");
-
 
     // useEffect(() => {
     //     //call firebase and retrieve stories
@@ -26,22 +24,29 @@ function Home({isAuth}) {
     //     await deleteDoc(storyDoc);
     // }
 
-
     return (
-        <Container>
-            <About/>
-            <Library/>
-        {/*    {storyList.map((story) => {*/}
-        {/*    return <div>*/}
-        {/*        <div className="story">{story.title}</div>*/}
-        {/*        {isAuth && story.author.id === auth.currentUser.uid && <button onClick={() => {*/}
-        {/*            deleteStory(story.id)*/}
-        {/*        }}>X</button>}*/}
-        {/*    </div>*/}
+        <>
+            <h3>Library</h3>
+            
 
-        {/*})}*/}
-        </Container>
+                <Row>
+                    <Col><Storybook/></Col>
+                    <Col><Storybook/></Col>
+                    <Col><Storybook/></Col>
+                    <Col><Storybook/></Col>
+                    <Col><Storybook/></Col>
+                </Row>
+
+
+
+            {/*{storyList.map((story) => {*/}
+            {/*    return <div>*/}
+            {/*        <div className="story">{story.title}</div>*/}
+            {/*    </div>*/}
+            {/*})}*/}
+
+        </>
     );
 }
 
-export default Home;
+export default Library;

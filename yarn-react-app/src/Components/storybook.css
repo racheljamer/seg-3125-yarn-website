@@ -1,0 +1,11 @@
+/*styling inspired by: https://codepen.io/poulamic/pen/RwrKqmb*/
+
+.book{
+    width:200px;
+    height:300px;
+    border-radius: 20px 16px 12px 32px;
+    background: #51969b linear-gradient(to right, #4d7e81 30px, #1d656b 32px, transparent 30px);
+    color: #c7a851;
+    -webkit-text-stroke: 1px #1d656b;
+}
+
