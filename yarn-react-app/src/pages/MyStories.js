@@ -10,28 +10,26 @@ function MyStories() {
     const storiesCollectionRef = collection(db, "stories");
 
     //call firebase to retrieve stories
-    useEffect(() => {
-        const getStories = async () => {
-            const data = await getDocs(storiesCollectionRef);
-            setStoryList(data.docs.map(
-                (doc) => ({...doc.data(), id:doc.id})
-            ));
-        }
-        getStories();
-    });
+    // useEffect(() => {
+    //     const getStories = async () => {
+    //         const data = await getDocs(storiesCollectionRef);
+    //         setStoryList(data.docs.map(
+    //             (doc) => ({...doc.data(), id:doc.id})
+    //         ));
+    //     }
+    //     getStories();
+    // });
 
     return (
         <Container>
             <h3 className="my-3">My Stories</h3>
-            Here are my stories:
-            <Link to="/WriteStory">WriteStory</Link>
+
             <Row>
-            {storyList.map((story) => {
-                return <Storybook title={story.title}/>
-            })}
-                <Col>
-                    <Storybook title="New Story"/>
-                </Col>
+            {/*{storyList.map((story) => {*/}
+            {/*    return <Storybook title={story.title}/>*/}
+            {/*})}*/}
+                <Storybook title="My Story 1" href="/story"/>
+                <Storybook title="New Story" href="/writestory" icon={true}/>
             </Row>
         </Container>
     );
