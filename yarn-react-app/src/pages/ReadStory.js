@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {Button, Col, Container, Image, Offcanvas, Row} from "react-bootstrap";
+import {Button, ButtonGroup, Col, Container, Image, Offcanvas, Row} from "react-bootstrap";
 import "./ReadStory.css";
 import Comment from "../Components/Comment";
-import {MdShare, MdBookmark} from "react-icons/md";
+import {MdShare, MdBookmark, MdOutlineAdd} from "react-icons/md";
 import {IoMdHeart} from "react-icons/io";
+import {RiFontSize} from "react-icons/ri"
+import {GoDash} from "react-icons/go"
 
 const storyPlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis. Nulla erat augue, molestie vitae neque venenatis, maximus pharetra arcu. Ut suscipit semper diam at commodo. Duis maximus ante laoreet porta maximus. Pellentesque a fermentum odio, in rutrum lectus.\n" +
     "\n" +
@@ -30,7 +32,17 @@ function ReadStory() {
     return (
         <Container>
             <h3 className="mt-5 text-center">Lorem Ipsum Dolor</h3>
-            <h5 className="my-2 text-end">Story by: <a as={Button} onClick={handleShow} href="">Author</a></h5>
+            <div className="d-flex">
+                <h5 className="my-2">Story by: <a as={Button} onClick={handleShow} href="">Johnny Appleseed</a></h5>
+                <span className="ms-auto d-inline-block align-top mb-2 ">
+                    <p className="mb-0">Font Size</p>
+                    <ButtonGroup>
+                        <Button variant="outline-primary" > - </Button>
+                        <Button variant="outline-primary">+</Button>
+                    </ButtonGroup>
+                </span>
+
+            </div>
             <p className="content">
                 {storyPlaceholder}
             </p>
@@ -49,7 +61,7 @@ function ReadStory() {
                 <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
                 <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
             </Row>
-
+<hr/>
             <h4>Comments</h4>
             <Comment/>
             <Comment/>
