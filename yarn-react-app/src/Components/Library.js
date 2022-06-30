@@ -9,27 +9,27 @@ function Library() {
     const [storyList, setStoryList] = useState([]);
     const storiesCollectionRef = collection(db, "stories");
 
-    useEffect(() => {
-        //call firebase and retrieve stories
-        const getPosts = async () => {
-            const data = await getDocs(storiesCollectionRef);
-            setStoryList(data.docs.map(
-                (doc) => ({...doc.data(), id: doc.id})));
-        };
-
-        getPosts();
-    });
-
-    const deleteStory = async (id) => {
-        const storyDoc = doc(db, "stories", id);
-        await deleteDoc(storyDoc);
-    }
+    // useEffect(() => {
+    //     //call firebase and retrieve stories
+    //     const getPosts = async () => {
+    //         const data = await getDocs(storiesCollectionRef);
+    //         setStoryList(data.docs.map(
+    //             (doc) => ({...doc.data(), id: doc.id})));
+    //     };
+    //
+    //     getPosts();
+    // });
+    //
+    // const deleteStory = async (id) => {
+    //     const storyDoc = doc(db, "stories", id);
+    //     await deleteDoc(storyDoc);
+    // }
 
     return (
         <>
             <h3 id="library">Library</h3>
                 <Form>
-                    <Row className="m-3">
+                    <Row className="my-3 me-3">
                         <InputGroup as={Col}>
                             <InputGroup.Text id="basic-addon1"><MdOutlineSearch/></InputGroup.Text>
                             <Form.Control type="text" placeholder="Search the library"/>
@@ -49,17 +49,20 @@ function Library() {
                 </Form>
 
                 <Row>
-                    <Col><Storybook/></Col>
-                    <Col><Storybook/></Col>
-                    <Col><Storybook/></Col>
-                    <Col><Storybook/></Col>
-                    <Col><Storybook/></Col>
+                    <Storybook title="Story 1" author="Jane Doe" href="/story"/>
+                    <Storybook title="Story 2" author="Jane Doe" href="/story"/>
+                    <Storybook title="Story 3" author="Jane Doe" href="/story"/>
+                    <Storybook title="Story 4" author="Jane Doe" href="/story"/>
+                    <Storybook title="Story 5" author="Jane Doe" href="/story"/>
+                    <Storybook title="Story 6" author="Jane Doe" href="/story"/>
+                    <Storybook title="Story 7" author="Jane Doe" href="/story"/>
+
                 </Row>
-            <Row>
-                {storyList.map((story) => {
-                    return <Storybook title={story.title}/>
-                })}
-            </Row>
+            {/*<Row>*/}
+            {/*    {storyList.map((story) => {*/}
+            {/*        return <Storybook title={story.title}/>*/}
+            {/*    })}*/}
+            {/*</Row>*/}
 
 
 

@@ -11,6 +11,8 @@
 }
 
 .storybook{
+    font-family: "Georgia", Georgia, serif;
+
     padding:5px;
     width:220px;
     height:315px;
@@ -25,6 +27,6 @@
 
 
     color: #e7c473;
-    -webkit-text-stroke: 0.5px #19254d;
+    -webkit-text-stroke: 0.2px #19254d;
 }
 
