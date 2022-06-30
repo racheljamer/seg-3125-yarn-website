@@ -8,6 +8,9 @@ import MainNav from "./Components/mainNav";
 import {signOut} from "firebase/auth";
 import {auth} from "./firebase-config";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
+import MyStories from "./pages/MyStories";
+import Account from "./pages/Account";
+import ReadStory from "./pages/ReadStory";
 
 function App() {
     const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
@@ -37,7 +40,7 @@ function App() {
                             <Nav.Link href="/Login">Login</Nav.Link>
                         ) : (
                             <>
-                                <Nav.Link href="/WriteStory">Write</Nav.Link>
+                                <Nav.Link href="/MyStories">Write</Nav.Link>
                                 <Button onClick={signUserOut}>Log out</Button>
                             </>
                             )}
@@ -47,8 +50,11 @@ function App() {
         </Navbar>
         <Routes>
             <Route path="/" element={<Home isAuth={isAuth}/>} />
+            <Route path="/MyStories" element={<MyStories isAuth={isAuth}/>}/>
             <Route path="/WriteStory" element={<WriteStory isAuth={isAuth}/>}/>
             <Route path="/Login" element={<Login setIsAuth={setIsAuth}/>}/>
+            <Route path="/Account" element={<Account setIsAuth={setIsAuth}/>}/>
+            <Route path="/Story" element={<ReadStory/>}/>
         </Routes>
     </div>
   );

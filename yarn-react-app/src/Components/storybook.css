@@ -7,5 +7,24 @@
     background: #51969b linear-gradient(to right, #4d7e81 30px, #1d656b 32px, transparent 30px);
     color: #c7a851;
     -webkit-text-stroke: 1px #1d656b;
+    margin: 0px 10px;
+}
+
+.storybook{
+    padding:5px;
+    width:220px;
+    height:315px;
+
+    background-image: url("../images/blue book.png");
+    background-repeat: no-repeat;
+    background-size: auto;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+
+    color: #e7c473;
+    -webkit-text-stroke: 0.5px #19254d;
 }
 

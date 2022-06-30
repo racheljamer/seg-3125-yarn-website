@@ -3,34 +3,35 @@ import {collection, getDocs, deleteDoc, doc} from "firebase/firestore";
 import {db} from "../firebase-config";
 import Storybook from "./Storybook";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
+import {MdOutlineSearch} from "react-icons/md";
 
 function Library() {
     const [storyList, setStoryList] = useState([]);
     const storiesCollectionRef = collection(db, "stories");
 
-    // useEffect(() => {
-    //     //call firebase and retrieve stories
-    //     const getPosts = async () => {
-    //         const data = await getDocs(storiesCollectionRef);
-    //         setStoryList(data.docs.map(
-    //             (doc) => ({...doc.data(), id: doc.id})));
-    //     };
-    //
-    //     getPosts();
-    // });
-    //
-    // const deleteStory = async (id) => {
-    //     const storyDoc = doc(db, "stories", id);
-    //     await deleteDoc(storyDoc);
-    // }
+    useEffect(() => {
+        //call firebase and retrieve stories
+        const getPosts = async () => {
+            const data = await getDocs(storiesCollectionRef);
+            setStoryList(data.docs.map(
+                (doc) => ({...doc.data(), id: doc.id})));
+        };
+
+        getPosts();
+    });
+
+    const deleteStory = async (id) => {
+        const storyDoc = doc(db, "stories", id);
+        await deleteDoc(storyDoc);
+    }
 
     return (
         <>
             <h3 id="library">Library</h3>
                 <Form>
-                    <Row>
-                        <InputGroup as={Col} >
-                            <InputGroup.Text id="basic-addon1">🔍</InputGroup.Text>
+                    <Row className="m-3">
+                        <InputGroup as={Col}>
+                            <InputGroup.Text id="basic-addon1"><MdOutlineSearch/></InputGroup.Text>
                             <Form.Control type="text" placeholder="Search the library"/>
                             <Button variant="outline-primary" id="button-addon2">
                                 Search
@@ -55,11 +56,9 @@ function Library() {
                     <Col><Storybook/></Col>
                 </Row>
             <Row>
-                <Col><Storybook/></Col>
-                <Col><Storybook/></Col>
-                <Col><Storybook/></Col>
-                <Col><Storybook/></Col>
-                <Col><Storybook/></Col>
+                {storyList.map((story) => {
+                    return <Storybook title={story.title}/>
+                })}
             </Row>
 
 

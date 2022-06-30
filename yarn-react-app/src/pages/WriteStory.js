@@ -3,6 +3,7 @@ import {Button, ButtonToolbar, Col, Container, Form, Row} from "react-bootstrap"
 import {addDoc, collection} from "firebase/firestore";
 import {db, auth} from "../firebase-config";
 import {useNavigate} from "react-router-dom";
+import {MdUpload} from "react-icons/md"
 
 
 function WriteStory({isAuth}) {
@@ -70,10 +71,10 @@ function WriteStory({isAuth}) {
                             }}
                         />
                     </Form.Group>
-                    <ButtonToolbar>
-                        <Button>Upload Images</Button>
-                        <Button>Save Draft</Button>
-                        <Button onClick={createPost}>Publish</Button>
+                    <ButtonToolbar className="w-100">
+                        <Button disabled><MdUpload/> Images</Button>
+                            <Button className="mx-3" disabled>Save Draft</Button>
+                            <Button onClick={createPost}>Publish</Button>
                     </ButtonToolbar>
                 </Form>
             </Container>
