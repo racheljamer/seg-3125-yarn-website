@@ -19,7 +19,7 @@ function App() {
         signOut(auth).then(() => {
             localStorage.clear();
             setIsAuth(false);
-            window.location.pathname = "/login";
+            window.location.pathname = "/";
 
         })
     };
@@ -33,7 +33,7 @@ function App() {
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
+                    <Nav className="ms-auto">
                         <Nav.Link href="/#library">Library</Nav.Link>
                         {!isAuth ? (
                             <Nav.Link href="/Login">Login</Nav.Link>

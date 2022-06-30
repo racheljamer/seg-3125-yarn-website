@@ -19,7 +19,7 @@ function About() {
                     <h5>Read</h5>
                     <p>Click a storybook to read the story. Find out more about the author, leave a comment, and share the story with your friends. </p>
                     <h5>Write</h5>
-                    <p>Got a fun anecdote? Share your story on Yarn.</p>
+                    <p>Got a fun anecdote? <a href="/login">Share your story on Yarn.</a></p>
                 </Col>
                 <Col>
                     <Image rounded src="https://picsum.photos/600/400"/>

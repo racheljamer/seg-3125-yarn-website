@@ -28,7 +28,7 @@ function MyStories() {
             {/*{storyList.map((story) => {*/}
             {/*    return <Storybook title={story.title}/>*/}
             {/*})}*/}
-                <Storybook title="My Story 1" href="/story"/>
+                <Storybook title="My Story 1" href="/story"/><Storybook title="My Story 2" href="/story"/><Storybook title="My Story 3" href="/story"/>
                 <Storybook title="New Story" href="/writestory" icon={true}/>
             </Row>
         </Container>
