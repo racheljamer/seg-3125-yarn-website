@@ -35,11 +35,11 @@ function App() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link href="/#library">Library</Nav.Link>
-                        <Nav.Link href="/Account">My Account</Nav.Link>
                         {!isAuth ? (
                             <Nav.Link href="/Login">Login</Nav.Link>
                         ) : (
                             <>
+                                <Nav.Link href="/Account">My Account</Nav.Link>
                                 <Nav.Link href="/MyStories">Write</Nav.Link>
                                 <Button onClick={signUserOut}>Log out</Button>
                             </>
