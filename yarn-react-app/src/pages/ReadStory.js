@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Button, Col, Container, Image, Offcanvas, Row} from "react-bootstrap";
 import "./ReadStory.css";
+import Comment from "../Components/Comment";
 
 const storyPlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis. Nulla erat augue, molestie vitae neque venenatis, maximus pharetra arcu. Ut suscipit semper diam at commodo. Duis maximus ante laoreet porta maximus. Pellentesque a fermentum odio, in rutrum lectus.\n" +
     "\n" +
@@ -38,6 +39,7 @@ function ReadStory() {
             </Row>
 
             <h4>Comments</h4>
+            <Comment/>
 
 
             <Offcanvas show={showAuthor} onHide={handleClose}>
