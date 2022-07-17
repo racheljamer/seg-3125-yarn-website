@@ -4,7 +4,6 @@ import {Link, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import WriteStory from "./pages/WriteStory";
-import MainNav from "./Components/mainNav";
 import {signOut} from "firebase/auth";
 import {auth} from "./firebase-config";
 import {Button, Container, Nav, Navbar} from "react-bootstrap";
@@ -15,12 +14,12 @@ import {BiLibrary} from "react-icons/bi";
 import {MdAccountCircle, MdBook} from "react-icons/md";
 import {RiQuillPenFill} from "react-icons/ri";
 
-const ProtectedRoute = ({isAuth, redirectPath = '/Login'}) => {
+const ProtectedRoute = ({isAuth, redirectPath = '/Login',children}) => {
     if (!isAuth) {
         return <Navigate to={redirectPath} replace />;
     }
 
-    return <Outlet/>;
+    return children ? children : <Outlet />;
 }
 
 function App() {
@@ -68,8 +67,8 @@ function App() {
             <Route path="*" element={<p>There's nothing here! 404</p>}/>
             <Route element={<ProtectedRoute isAuth={isAuth}/>}>
                 <Route path="/MyStories" element={<MyStories/>}/>
-                <Route path="/WriteStory" element={<WriteStory isAuth={isAuth}/>}/>
-                <Route path="/Account" element={<Account setIsAuth={setIsAuth}/>}/>
+                <Route path="/WriteStory" element={<WriteStory/>}/>
+                <Route path="/Account" element={<Account/>}/>
             </Route>
         </Routes>
     </div>

@@ -6,7 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {MdUpload} from "react-icons/md"
 
 
-function WriteStory({isAuth}) {
+function WriteStory() {
     //states!
     const [title, setTitle] = useState("");
     const [storyText, setStoryText] = useState("");
@@ -26,12 +26,6 @@ function WriteStory({isAuth}) {
         navigate("/");
     };
 
-    useEffect(() => {
-        if (!isAuth) {
-            navigate("/login"); //this is just a trick to make sure users are authenticated first
-        }
-
-    }, [])
     return (
             <Container className="px-5">
                 <h3 className="mt-5 mb-3">Tell your story</h3>

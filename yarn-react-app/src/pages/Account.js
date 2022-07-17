@@ -5,12 +5,8 @@ import {auth} from "../firebase-config";
 import {Navigate, useNavigate} from "react-router-dom";
 import "./Account.css";
 
-function Account({isAuth}) {
-    let navigate = useNavigate();
+function Account() {
 
-    if (!isAuth) {
-        return <Navigate to="/Login" replace/>
-    }
     return (
         <Container className="mt-5">
             <h3>My Account</h3>
