@@ -2,18 +2,15 @@ import React, {useEffect} from 'react';
 import {Button, Col, Container, DropdownButton, Dropdown, Form, Image, InputGroup, Row} from "react-bootstrap";
 import {MdUpload, MdSave} from "react-icons/md";
 import {auth} from "../firebase-config";
-import {useNavigate} from "react-router-dom";
+import {Navigate, useNavigate} from "react-router-dom";
 import "./Account.css";
 
 function Account({isAuth}) {
     let navigate = useNavigate();
 
-    // useEffect(() => {
-    //     if (!isAuth) {
-    //         navigate("/login"); //this is just a trick to make sure users are authenticated first
-    //     }
-    //
-    // }, [])
+    if (!isAuth) {
+        return <Navigate to="/Login" replace/>
+    }
     return (
         <Container className="mt-5">
             <h3>My Account</h3>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Link, Route, Routes} from "react-router-dom";
+import {Link, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import WriteStory from "./pages/WriteStory";
@@ -11,6 +11,17 @@ import {Button, Container, Nav, Navbar} from "react-bootstrap";
 import MyStories from "./pages/MyStories";
 import Account from "./pages/Account";
 import ReadStory from "./pages/ReadStory";
+import {BiLibrary} from "react-icons/bi";
+import {MdAccountCircle, MdBook} from "react-icons/md";
+import {RiQuillPenFill} from "react-icons/ri";
+
+const ProtectedRoute = ({isAuth, redirectPath = '/Login'}) => {
+    if (!isAuth) {
+        return <Navigate to={redirectPath} replace />;
+    }
+
+    return <Outlet/>;
+}
 
 function App() {
     const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth"));
@@ -34,14 +45,16 @@ function App() {
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
-                        <Nav.Link href="/#library">Library</Nav.Link>
+                        <Nav.Link href="/#library"><BiLibrary/> Library</Nav.Link>
                         {!isAuth ? (
                             <Nav.Link href="/Login">Login</Nav.Link>
                         ) : (
                             <>
-                                <Nav.Link href="/Account">My Account</Nav.Link>
-                                <Nav.Link href="/MyStories">Write</Nav.Link>
-                                <Button onClick={signUserOut}>Log out</Button>
+                                <Nav.Link href="/WriteStory"><RiQuillPenFill/> Write Story</Nav.Link>
+                                <Nav.Link href="/Account"><MdAccountCircle/> My Account</Nav.Link>
+                                <Nav.Link href="/MyStories"><MdBook/> My Stories</Nav.Link>
+                                <Button variant="secondary" onClick={signUserOut}>Log out </Button>
+
                             </>
                             )}
                     </Nav>
@@ -50,11 +63,14 @@ function App() {
         </Navbar>
         <Routes>
             <Route path="/" element={<Home isAuth={isAuth}/>} />
-            <Route path="/MyStories" element={<MyStories isAuth={isAuth}/>}/>
-            <Route path="/WriteStory" element={<WriteStory isAuth={isAuth}/>}/>
             <Route path="/Login" element={<Login setIsAuth={setIsAuth}/>}/>
-            <Route path="/Account" element={<Account setIsAuth={setIsAuth}/>}/>
             <Route path="/Story" element={<ReadStory/>}/>
+            <Route path="*" element={<p>There's nothing here! 404</p>}/>
+            <Route element={<ProtectedRoute isAuth={isAuth}/>}>
+                <Route path="/MyStories" element={<MyStories/>}/>
+                <Route path="/WriteStory" element={<WriteStory isAuth={isAuth}/>}/>
+                <Route path="/Account" element={<Account setIsAuth={setIsAuth}/>}/>
+            </Route>
         </Routes>
     </div>
   );
