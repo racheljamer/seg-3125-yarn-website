@@ -12,6 +12,10 @@ function WriteStory() {
     const [storyText, setStoryText] = useState("");
     const [year, setYear] = useState("");
 
+    //form control states
+    const [form, setForm] = useState({});
+    const [errors, setErrors] = useState({});
+
     let navigate = useNavigate();
 
     //send story to firestore
@@ -48,7 +52,8 @@ function WriteStory() {
                             <Form.Label>Year</Form.Label>
                             <Form.Control
                                 required
-                                type="text"
+                                type="month"
+                                max="2022-12"
                                 placeholder="yyyy"
                                 onChange={(event) => {
                                     setYear(event.target.value);
