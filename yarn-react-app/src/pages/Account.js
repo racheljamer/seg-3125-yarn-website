@@ -5,6 +5,8 @@ import {auth} from "../firebase-config";
 import {Navigate, useNavigate} from "react-router-dom";
 import "./Account.css";
 
+//auth.currentUser.displayName, id:auth.currentUser.uid <= import auth from firebase to access first name and such
+
 function Account() {
 
     return (
