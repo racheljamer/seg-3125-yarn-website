@@ -25,7 +25,7 @@ function WriteStory() {
         });
         navigate("/");
     };
-
+//to validate: all fields required, title max 70 ch, body max ?, year regex
     return (
             <Container className="px-5">
                 <h3 className="mt-5 mb-3">Tell your story</h3>
@@ -35,6 +35,7 @@ function WriteStory() {
                         <Form.Group as={Col}>
                             <Form.Label>Title</Form.Label>
                             <Form.Control
+                                required
                                 type="text"
                                 placeholder="Enter a catchy title!"
                                 className="mb-3"
@@ -46,6 +47,7 @@ function WriteStory() {
                         <Form.Group as={Col} xs={2} controlId="formGridCity">
                             <Form.Label>Year</Form.Label>
                             <Form.Control
+                                required
                                 type="text"
                                 placeholder="yyyy"
                                 onChange={(event) => {
@@ -57,6 +59,7 @@ function WriteStory() {
                     <Form.Group>
                         <Form.Label as={"h5"}>Story</Form.Label>
                         <Form.Control
+                            required
                             as="textarea" rows={8}
                             placeholder="Tell your story."
                             className="mb-3"

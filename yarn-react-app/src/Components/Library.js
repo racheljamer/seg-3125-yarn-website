@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {collection, getDocs, deleteDoc, doc} from "firebase/firestore";
 import {db} from "../firebase-config";
 import Storybook from "./Storybook";
@@ -24,6 +24,23 @@ function Library() {
     //     const storyDoc = doc(db, "stories", id);
     //     await deleteDoc(storyDoc);
     // }
+
+    const deleteStory = useCallback(async (id) => {
+        const storyDoc = doc(db, "stories", id);
+        await deleteDoc(storyDoc);
+    }, []);
+
+    useEffect(() => {
+        const getStories = async () => {
+            try {
+                const data = await getDocs(storiesCollectionRef);
+                setStoryList(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getStories();
+    }, [deleteStory]);
 
     return (
         <>
@@ -58,19 +75,19 @@ function Library() {
                     <Storybook title="Story 7" author="Jane Doe" href="/story"/>
 
                 </Row>
-            {/*<Row>*/}
-            {/*    {storyList.map((story) => {*/}
-            {/*        return <Storybook title={story.title}/>*/}
-            {/*    })}*/}
-            {/*</Row>*/}
+            <Row>
+                {storyList.map((story) => {
+                    return <Storybook title={story.title}/>
+                })}
+            </Row>
 
 
 
-            {/*{storyList.map((story) => {*/}
-            {/*    return <div>*/}
-            {/*        <div className="story">{story.title}</div>*/}
-            {/*    </div>*/}
-            {/*})}*/}
+            {storyList.map((story) => {
+                return <div>
+                    <div className="story">{story.title}</div>
+                </div>
+            })}
 
         </>
     );
