@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from 'react';
-import {Button, ButtonToolbar, Col, Container, Form, Row} from "react-bootstrap";
+import React, {useState} from 'react';
+import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {addDoc, collection} from "firebase/firestore";
-import {db, auth} from "../firebase-config";
+import {db, auth, storage} from "../firebase-config";
+import {ref, uploadBytes, getDownloadURL} from 'firebase/storage';
 import {useNavigate} from "react-router-dom";
-import {MdUpload} from "react-icons/md"
 
 
 function WriteStory() {
     //form control states
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
+
+    //image
+    const [imageUpload, setImageUpload] = useState(null);
 
     const setField = (field, value) => {
         setForm({
@@ -25,7 +28,7 @@ function WriteStory() {
 
     //validation conditions
     const findFormErrors = () => {
-        const {title, year, storyText} = form
+        const {title, year, storyText, storyPic} = form
         const newErrors = {}
 
         //title errors
@@ -40,6 +43,11 @@ function WriteStory() {
         //storyText errors
         if (!storyText || storyText === '') newErrors.storyText = 'Please enter a story.'
 
+        //storyPic errors
+        const validTypes = ['png', 'jpeg', 'jpg'];
+        const fileType = storyPic.type.split('/')[1];
+        if (!validTypes.includes(fileType)) newErrors.storyPic = 'Not a valid image type! Please upload .png, .jpeg, .jpg'
+
         return newErrors
     }
 
@@ -51,24 +59,32 @@ function WriteStory() {
             setErrors(newErrors)
         } else {
             //no errors - submit story to firebase!
-            createPost();
+            uploadImage();
         }
     }
 
     let navigate = useNavigate();
 
     //send story to firestore
-    const storiesCollectionRef = collection(db, "stories");
-    const createPost = async () => {
-        await addDoc(storiesCollectionRef, {
-            title: form.title,
-            storyText: form.storyText,
-            author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
-            year: form.year
-        });
-        navigate("/");
+    const storiesCollectionRef = collection(db, "teststories"); //TODO: Change this to finalstories before launching
+
+    const uploadImage = () => {
+        if (imageUpload === null) return;
+        const imageRef = ref(storage, `storyImages/${imageUpload.name + Date.now()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                const docRef = addDoc(storiesCollectionRef, {
+                    title: form.title,
+                    storyText: form.storyText,
+                    author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
+                    year: form.year,
+                    picture: url
+                });
+                navigate("/");
+            })
+        })
     };
-//TODO: figure out how to upload images to firebase
+
     return (
             <Container className="px-5">
                 <h3 className="mt-5 mb-3">Tell your story</h3>
@@ -113,11 +129,21 @@ function WriteStory() {
                             {errors.storyText}
                         </Form.Control.Feedback>
                     </Form.Group>
-                    <ButtonToolbar className="w-100">
-                        <Button disabled><MdUpload/> Images</Button>
-                            <Button className="mx-3" disabled>Save Draft</Button>
-                            <Button type="submit" onClick={handleSubmit}>Publish</Button>
-                    </ButtonToolbar>
+                    <Form.Group>
+                        <Form.Label as="h5" className="mt-3">Image</Form.Label>
+                        <Form.Control
+                            type="file"
+                            onChange={(e) => {
+                                setImageUpload(e.target.files[0]) //first file in array
+                                setField('storyPic', e.target.files[0])
+                            }}
+                            isInvalid={!!errors.storyPic}
+                        />
+                        <Form.Control.Feedback type="invalid" className="mb-3">
+                            {errors.storyPic}
+                        </Form.Control.Feedback>
+                    </Form.Group>
+                    <Button type="submit" onClick={handleSubmit} className="mt-3">Publish</Button>
                 </Form>
             </Container>
     );
