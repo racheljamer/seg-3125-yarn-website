@@ -7,7 +7,7 @@ import {db} from "../firebase-config";
 import {IoMdHeart} from "react-icons/io";
 import {RiFontSize} from "react-icons/ri"
 import {GoDash} from "react-icons/go"
-import {useParams} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 
 const storyPlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis. Nulla erat augue, molestie vitae neque venenatis, maximus pharetra arcu. Ut suscipit semper diam at commodo. Duis maximus ante laoreet porta maximus. Pellentesque a fermentum odio, in rutrum lectus.\n" +
@@ -49,6 +49,9 @@ function ReadStory() {
 
     const handleBookmark = () => setIsBookmarked(!isBookmarked);
     const handleLike = () => setIsLiked(!isLiked);
+    const handleShare = () => {
+        navigator.clipboard.writeText(window.location.href);
+    }
 
     //firestore get doc by id
     const docRef = doc(db, 'teststories', id);
@@ -89,8 +92,9 @@ function ReadStory() {
             <p className="content" >
                 {story.storyText}
             </p>
+            <Image src={story.picture} width="50%" className="rounded my-2"/>
             <div id="Interactions" className="d-flex">
-                <Button className="btn ms-auto"><MdShare/> Share </Button>
+                <Button className="btn ms-auto" onClick={handleShare}><MdShare/> Share </Button>
                 <Button className="btn mx-1"
                         variant={isBookmarked ? "secondary" : "primary"}
                         onClick={handleBookmark}>
@@ -101,7 +105,7 @@ function ReadStory() {
                 <Button className="btn" variant={isLiked ? "secondary" : "primary"} onClick={handleLike}><IoMdHeart color={isLiked ? "#e07a7f" : "white"}/> {isLiked ? "Un-l" : "L"}ike </Button>
             </div>
 
-            <Image src={story.picture} width="50%" className="rounded my-2"/>
+
 
             <hr/>
             <h4>Comments</h4>
