@@ -1,11 +1,14 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, ButtonGroup, Col, Container, Image, Offcanvas, Row} from "react-bootstrap";
 import "./ReadStory.css";
 import Comment from "../Components/Comment";
 import {MdShare, MdBookmark, MdOutlineAdd} from "react-icons/md";
+import {db} from "../firebase-config";
 import {IoMdHeart} from "react-icons/io";
 import {RiFontSize} from "react-icons/ri"
 import {GoDash} from "react-icons/go"
+import {useParams} from "react-router-dom";
+import { doc, getDoc } from "firebase/firestore";
 
 const storyPlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis. Nulla erat augue, molestie vitae neque venenatis, maximus pharetra arcu. Ut suscipit semper diam at commodo. Duis maximus ante laoreet porta maximus. Pellentesque a fermentum odio, in rutrum lectus.\n" +
     "\n" +
@@ -18,8 +21,25 @@ const storyPlaceholder = "Lorem ipsum dolor sit amet, consectetur adipiscing eli
     "Donec porta eros ac mauris accumsan egestas. Aenean metus odio, convallis sed mauris convallis, efficitur volutpat orci. Donec porttitor, odio nec fringilla bibendum, risus quam iaculis sapien, iaculis feugiat magna urna eu risus. Vivamus ac fringilla lacus. In ornare interdum augue sed pulvinar. Nulla a tellus ante. Nulla molestie vehicula lobortis. Mauris sed lectus non ligula viverra finibus quis at risus. Nam molestie ipsum at lacus iaculis ornare nec ac est. Etiam at sem interdum, euismod lectus eu, tincidunt nunc. In auctor erat nec odio faucibus gravida. Suspendisse auctor enim eget massa volutpat gravida quis sit amet dui. Maecenas at tellus purus. Cras egestas dictum dolor id commodo. Nunc vel elit tellus. Duis mollis mattis massa eget cursus.";
 
 function ReadStory() {
+    const {id} = useParams();
+
+    //socials
+    const [isBookmarked, setIsBookmarked] = useState (false);
+    const [isLiked, setIsLiked] = useState (false);
+
+
+    //font size change
+    const [fontSize, setFontSize] = useState(14);
+
     //Author Off-canvas
     const [showAuthor, setShowAuthor] = useState(false);
+    const [story, setStory] = useState({
+        author: {
+            name: "",
+            id: ""
+        }
+    });
+    const [author, setAuthor] = useState({}); //eventually need to show author bio
 
     const handleClose = () => setShowAuthor(false);
     const handleShow = (e) => {
@@ -27,13 +47,36 @@ function ReadStory() {
         setShowAuthor(true);
     }
 
+    const handleBookmark = () => setIsBookmarked(!isBookmarked);
+    const handleLike = () => setIsLiked(!isLiked);
+
     //firestore get doc by id
+    const docRef = doc(db, 'teststories', id);
+
+
+    useEffect(() => {
+        const getStory = async() => {
+            try {
+                const data = await getDoc(docRef)
+                    .then((doc) => {
+                        setStory({...doc.data()})
+                        console.log(doc.data(), doc.id)
+                    })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getStory();
+    }, [])
+
+
+    //const story = db.collection('teststories').doc(id).get();
 
     return (
         <Container>
-            <h3 className="mt-5 text-center">Lorem Ipsum Dolor</h3>
+            <h3 className="mt-5 text-center">{story.title}</h3>
             <div className="d-flex">
-                <h5 className="my-2">Story by: <a as={Button} onClick={handleShow} href="">Johnny Appleseed</a></h5>
+                <h5 className="my-2">Story by: <a as={Button} onClick={handleShow} href="">{story.author.name}</a></h5>
                 <span className="ms-auto d-inline-block align-top mb-2 ">
                     <p className="mb-0">Font Size</p>
                     <ButtonGroup>
@@ -43,25 +86,24 @@ function ReadStory() {
                 </span>
 
             </div>
-            <p className="content">
-                {storyPlaceholder}
+            <p className="content" >
+                {story.storyText}
             </p>
             <div id="Interactions" className="d-flex">
                 <Button className="btn ms-auto"><MdShare/> Share </Button>
-                <Button className="btn mx-1"><MdBookmark/> Bookmark </Button>
-                <Button className="btn"><IoMdHeart/> Like </Button>
+                <Button className="btn mx-1"
+                        variant={isBookmarked ? "secondary" : "primary"}
+                        onClick={handleBookmark}>
+                    <MdBookmark
+                        color={isBookmarked ? "#eac868" : "white"}/>
+                    {isBookmarked ? "Un-b" : "B"}ookmark
+                </Button>
+                <Button className="btn" variant={isLiked ? "secondary" : "primary"} onClick={handleLike}><IoMdHeart color={isLiked ? "#e07a7f" : "white"}/> {isLiked ? "Un-l" : "L"}ike </Button>
             </div>
 
-            <h4>Photo Album</h4>
-            <Row>
-                <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
-                <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
-                <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
-                <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
-                <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
-                <Col><Image src="https://picsum.photos/600/400" width="400" className="rounded my-2"/></Col>
-            </Row>
-<hr/>
+            <Image src={story.picture} width="50%" className="rounded my-2"/>
+
+            <hr/>
             <h4>Comments</h4>
             <Comment/>
             <Comment/>
@@ -74,7 +116,7 @@ function ReadStory() {
                 <Offcanvas.Body>
                     <div align="center">
                         <Image className="w-75" thumbnail src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
-                        <h4 className="mt-2">Johnny Appleseed</h4>
+                        <h4 className="mt-2">{story.author.name}</h4>
                     </div>
                     <h5>Biography</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis.</p>

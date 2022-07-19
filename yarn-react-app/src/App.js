@@ -63,7 +63,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Home isAuth={isAuth}/>} />
             <Route path="/Login" element={<Login setIsAuth={setIsAuth}/>}/>
-            <Route path="/Story" element={<ReadStory/>}/>
+            <Route path="/story/:id" element={<ReadStory/>}/>
             <Route path="*" element={<p>There's nothing here! 404</p>}/>
             <Route element={<ProtectedRoute isAuth={isAuth}/>}>
                 <Route path="/MyStories" element={<MyStories/>}/>

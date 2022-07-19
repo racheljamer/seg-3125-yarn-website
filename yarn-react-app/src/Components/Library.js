@@ -7,7 +7,7 @@ import {MdOutlineSearch} from "react-icons/md";
 
 function Library() {
     const [storyList, setStoryList] = useState([]);
-    const storiesCollectionRef = collection(db, "stories");
+    const storiesCollectionRef = collection(db, "teststories");
 
     // useEffect(() => {
     //     //call firebase and retrieve stories
@@ -65,30 +65,21 @@ function Library() {
 
                 </Form>
 
-                <Row>
-                    <Storybook title="Story 1" author="Jane Doe" href="/story"/>
-                    <Storybook title="Story 2" author="Jane Doe" href="/story"/>
-                    <Storybook title="Story 3" author="Jane Doe" href="/story"/>
-                    <Storybook title="Story 4" author="Jane Doe" href="/story"/>
-                    <Storybook title="Story 5" author="Jane Doe" href="/story"/>
-                    <Storybook title="Story 6" author="Jane Doe" href="/story"/>
-                    <Storybook title="Story 7" author="Jane Doe" href="/story"/>
+                {/*<Row>*/}
+                {/*    <Storybook title="Story 1" author="Jane Doe" href="/story"/>*/}
+                {/*    <Storybook title="Story 2" author="Jane Doe" href="/story"/>*/}
+                {/*    <Storybook title="Story 3" author="Jane Doe" href="/story"/>*/}
+                {/*    <Storybook title="Story 4" author="Jane Doe" href="/story"/>*/}
+                {/*    <Storybook title="Story 5" author="Jane Doe" href="/story"/>*/}
+                {/*    <Storybook title="Story 6" author="Jane Doe" href="/story"/>*/}
+                {/*    <Storybook title="Story 7" author="Jane Doe" href="/story"/>*/}
 
-                </Row>
+                {/*</Row>*/}
             <Row>
                 {storyList.map((story) => {
-                    return <Storybook title={story.title}/>
+                    return <Storybook title={story.title} author={story.author.name} href={`/story/${story.id}`}/>
                 })}
             </Row>
-
-
-
-            {storyList.map((story) => {
-                return <div>
-                    <div className="story">{story.title}</div>
-                </div>
-            })}
-
         </>
     );
 }

@@ -44,9 +44,13 @@ function WriteStory() {
         if (!storyText || storyText === '') newErrors.storyText = 'Please enter a story.'
 
         //storyPic errors
-        const validTypes = ['png', 'jpeg', 'jpg'];
-        const fileType = storyPic.type.split('/')[1];
-        if (!validTypes.includes(fileType)) newErrors.storyPic = 'Not a valid image type! Please upload .png, .jpeg, .jpg'
+        if (!imageUpload) {
+            //newErrors.storyPic = 'Please upload an image.'
+        } else {
+            const validTypes = ['png', 'jpeg', 'jpg'];
+            const fileType = imageUpload.type.split('/')[1];
+            if (!validTypes.includes(fileType)) newErrors.storyPic = 'Not a valid image type! Please upload .png, .jpeg, .jpg'
+        }
 
         return newErrors
     }
@@ -69,20 +73,29 @@ function WriteStory() {
     const storiesCollectionRef = collection(db, "teststories"); //TODO: Change this to finalstories before launching
 
     const uploadImage = () => {
-        if (imageUpload === null) return;
-        const imageRef = ref(storage, `storyImages/${imageUpload.name + Date.now()}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-                const docRef = addDoc(storiesCollectionRef, {
-                    title: form.title,
-                    storyText: form.storyText,
-                    author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
-                    year: form.year,
-                    picture: url
-                });
-                navigate("/");
+        if (imageUpload === null) {
+            const docRef = addDoc(storiesCollectionRef, {
+                title: form.title,
+                storyText: form.storyText,
+                author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
+                year: form.year
+            });
+            navigate("/");
+        } else {
+            const imageRef = ref(storage, `storyImages/${imageUpload.name + Date.now()}`);
+            uploadBytes(imageRef, imageUpload).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    const docRef = addDoc(storiesCollectionRef, {
+                        title: form.title,
+                        storyText: form.storyText,
+                        author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
+                        year: form.year,
+                        picture: url
+                    });
+                    navigate("/");
+                })
             })
-        })
+        }
     };
 
     return (
@@ -95,7 +108,7 @@ function WriteStory() {
                             <Form.Label>Title</Form.Label>
                             <Form.Control
                                 type="text"
-                                placeholder="Enter a catchy title!"
+                                placeholder="Enter a catchy title! (Max 70 characters)"
                                 onChange={e => setField('title', e.target.value)}
                                 isInvalid={!!errors.title}
                             />
@@ -121,7 +134,7 @@ function WriteStory() {
                         <Form.Label as={"h5"}>Story</Form.Label>
                         <Form.Control
                             as="textarea" rows={8}
-                            placeholder="Tell your story."
+                            placeholder="Write your story here."
                             onChange={e => setField('storyText', e.target.value)}
                             isInvalid={!!errors.storyText}
                         />
@@ -131,6 +144,7 @@ function WriteStory() {
                     </Form.Group>
                     <Form.Group>
                         <Form.Label as="h5" className="mt-3">Image</Form.Label>
+                        <p>Add a picture to go with your story. Accepted file types: .png, .jpeg, .jpg</p>
                         <Form.Control
                             type="file"
                             onChange={(e) => {
