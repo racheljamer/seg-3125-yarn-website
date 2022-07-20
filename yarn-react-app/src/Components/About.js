@@ -1,5 +1,6 @@
 import React from 'react';
 import {Col, Image, Row} from "react-bootstrap";
+import {MdMenuBook} from "react-icons/md";
 
 //strings (to be exported to a string file later?)
 const aboutStr = "Everyone has a story to tell, and here - you can read it. " +
@@ -10,7 +11,7 @@ const aboutStr = "Everyone has a story to tell, and here - you can read it. " +
 function About() {
     return (
         <div className="p-4">
-            <h3>About Yarn</h3>
+            <h3>About Yarn <MdMenuBook/></h3>
             <Row className="mr-2">
                 <Col>
                     <p>{aboutStr}</p>

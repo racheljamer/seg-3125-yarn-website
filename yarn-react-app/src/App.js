@@ -11,7 +11,7 @@ import MyStories from "./pages/MyStories";
 import Account from "./pages/Account";
 import ReadStory from "./pages/ReadStory";
 import {BiLibrary} from "react-icons/bi";
-import {MdAccountCircle, MdBook} from "react-icons/md";
+import {MdAccountCircle, MdBook, MdMenuBook} from "react-icons/md";
 import {RiQuillPenFill} from "react-icons/ri";
 
 const ProtectedRoute = ({isAuth, redirectPath = '/Login',children}) => {
@@ -39,7 +39,7 @@ function App() {
         <Navbar bg="light" expand="lg" variant="light" sticky="top">
             <Container>
                 <Navbar.Brand href="/">
-                    Yarn
+                    <MdMenuBook/> Yarn
                 </Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
