@@ -16,8 +16,6 @@ import Comment from "../Components/Comment";
 import {MdShare, MdBookmark, MdOutlineAdd} from "react-icons/md";
 import {db} from "../firebase-config";
 import {IoMdHeart} from "react-icons/io";
-import {RiFontSize} from "react-icons/ri"
-import {GoDash} from "react-icons/go"
 import {useLocation, useParams} from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 
@@ -42,12 +40,7 @@ function ReadStory() {
 
     //Author Off-canvas
     const [showAuthor, setShowAuthor] = useState(false);
-    const [story, setStory] = useState({
-        author: {
-            name: "",
-            id: ""
-        }
-    });
+    const [story, setStory] = useState({});
     const [author, setAuthor] = useState({}); //eventually need to show author bio
 
     const handleClose = () => setShowAuthor(false);
@@ -65,7 +58,7 @@ function ReadStory() {
     }
 
     //firestore get story doc by id
-    const docRef = doc(db, 'teststories', id);
+    const docRef = doc(db, 'teststories1', id);
 
     useEffect(() => {
         const getStory = async() => {
@@ -86,7 +79,7 @@ function ReadStory() {
         <Container>
             <h3 className="mt-5 text-center">{story.title}</h3>
             <div className="d-flex">
-                <h5 className="my-2">Story by: <a as={Button} onClick={handleShow} href="">{story.author.name}</a></h5>
+                <h5 className="my-2">Story by: <a as={Button} onClick={handleShow} href="">{story.authorName}</a></h5>
                 <span className="ms-auto d-inline-block align-top mb-2 ">
                     <p className="mb-0">Font Size</p>
                     <ButtonGroup>
@@ -131,7 +124,7 @@ function ReadStory() {
                 <Offcanvas.Body>
                     <div align="center">
                         <Image className="w-75" thumbnail src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
-                        <h4 className="mt-2">{story.author.name}</h4>
+                        <h4 className="mt-2">{story.authorName}</h4>
                     </div>
                     <h5>Biography</h5>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis.</p>

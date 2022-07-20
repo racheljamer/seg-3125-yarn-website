@@ -70,14 +70,15 @@ function WriteStory() {
     let navigate = useNavigate();
 
     //send story to firestore
-    const storiesCollectionRef = collection(db, "teststories"); //TODO: Change this to finalstories before launching
+    const storiesCollectionRef = collection(db, "teststories1"); //TODO: Change this to finalstories before launching
 
     const uploadImage = () => {
         if (imageUpload === null) {
             const docRef = addDoc(storiesCollectionRef, {
                 title: form.title,
                 storyText: form.storyText,
-                author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
+                authorName: auth.currentUser.displayName,
+                authorId: auth.currentUser.uid,
                 year: form.year
             });
             navigate("/");
@@ -88,8 +89,8 @@ function WriteStory() {
                     const docRef = addDoc(storiesCollectionRef, {
                         title: form.title,
                         storyText: form.storyText,
-                        author: {name: auth.currentUser.displayName, id:auth.currentUser.uid},
-                        year: form.year,
+                        authorName: auth.currentUser.displayName,
+                        authorId: auth.currentUser.uid,
                         picture: url
                     });
                     navigate("/");

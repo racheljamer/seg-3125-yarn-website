@@ -5,25 +5,10 @@ import Storybook from "./Storybook";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 import {MdOutlineSearch} from "react-icons/md";
 
+
 function Library() {
     const [storyList, setStoryList] = useState([]);
-    const storiesCollectionRef = collection(db, "teststories");
-
-    // useEffect(() => {
-    //     //call firebase and retrieve stories
-    //     const getPosts = async () => {
-    //         const data = await getDocs(storiesCollectionRef);
-    //         setStoryList(data.docs.map(
-    //             (doc) => ({...doc.data(), id: doc.id})));
-    //     };
-    //
-    //     getPosts();
-    // });
-    //
-    // const deleteStory = async (id) => {
-    //     const storyDoc = doc(db, "stories", id);
-    //     await deleteDoc(storyDoc);
-    // }
+    const storiesCollectionRef = collection(db, "teststories1");
 
     const deleteStory = useCallback(async (id) => {
         const storyDoc = doc(db, "stories", id);
@@ -77,7 +62,7 @@ function Library() {
                 {/*</Row>*/}
             <Row>
                 {storyList.map((story) => {
-                    return <Storybook title={story.title} author={story.author.name} href={`/story/${story.id}`}/>
+                    return <Storybook title={story.title} author={story.authorName} href={`/story/${story.id}`}/>
                 })}
             </Row>
         </>

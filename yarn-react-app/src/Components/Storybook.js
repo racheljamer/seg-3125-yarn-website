@@ -1,7 +1,7 @@
 import React from 'react';
 import './storybook.css';
 import {Col, Button} from "react-bootstrap";
-import {MdOutlineAdd} from "react-icons/md";
+import {MdOutlineAdd, MdOutlineDelete} from "react-icons/md";
 
 function Storybook(props) {
     return (
@@ -11,10 +11,12 @@ function Storybook(props) {
                     <h3 className="pt-5 text-center px-2">{props.title}</h3>
                     {props.author && <h4 className="pt-2 text-center">{props.author}</h4>}
                     <br/><br/>
-                    {props.icon &&<MdOutlineAdd size={50}/>
-                    }
+                    {props.add &&<MdOutlineAdd size={50}/>}
                 </div>
             </a>
+            <div className="d-grid" style={{width:220}}>
+                {props.children}
+            </div>
         </Col>
 
     );
