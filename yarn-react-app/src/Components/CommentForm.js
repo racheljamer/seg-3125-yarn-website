@@ -5,7 +5,7 @@ import {db, auth} from "../firebase-config";
 import {upload} from "@testing-library/user-event/dist/upload";
 
 
-function CommentForm({data}) {
+function CommentForm(props) {
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
 
@@ -54,7 +54,7 @@ function CommentForm({data}) {
             timestamp.getFullYear() + '-' + (timestamp.getMonth()+1) + "-" + timestamp.getDate();
 
         const docRef = addDoc(commentCollectionRef, {
-            storyId: data.id,
+            storyId: props.id,
             commenterName: auth.currentUser.displayName,
             commentTime: timestampString,
             commentText: form.commentText
@@ -65,18 +65,19 @@ function CommentForm({data}) {
         <div>
             <Form>
                 <Form.Group>
-                    <Form.Label>Comment</Form.Label>
+                    <Form.Label>Write Comment</Form.Label>
                     <Form.Control
                         as="textarea" rows={3}
-                        placeholder="Leave a comment!"
+                        placeholder={props.isAuth ? "Leave a comment!" : "Sign in to leave a comment!"}
                         onChange={e => setField('commentText', e.target.value)}
                         isInvalid = {!!errors.commentText}
+                        className="mb-1"
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.commentText}
                     </Form.Control.Feedback>
                 </Form.Group>
-                <Button type="submit" onClick={handleSubmit}>Comment</Button>
+                <Button type="submit" className="mt-1" onClick={handleSubmit} disabled={!props.isAuth}>Comment</Button>
             </Form>
         </div>
     )

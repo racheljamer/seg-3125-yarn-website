@@ -20,7 +20,7 @@ import {useLocation, useParams} from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import CommentForm from "../Components/CommentForm";
 
-function ReadStory() {
+function ReadStory({isAuth}) {
     const {id} = useParams();
 
     //socials
@@ -115,7 +115,7 @@ function ReadStory() {
             </div>
             <hr/>
             <h4>Comments</h4>
-            <CommentForm data={story}/>
+            <CommentForm id={story.id} isAuth={isAuth}/>
 
             <Comment/>
             <Comment/>
