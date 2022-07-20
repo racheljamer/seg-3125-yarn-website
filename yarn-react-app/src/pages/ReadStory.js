@@ -1,5 +1,16 @@
-import React, {useEffect, useState} from 'react';
-import {Button, ButtonGroup, Col, Container, Image, Offcanvas, Row} from "react-bootstrap";
+import React, {useEffect, useRef, useState} from 'react';
+import {
+    Button,
+    ButtonGroup,
+    Col,
+    Container,
+    Image,
+    Offcanvas,
+    Overlay,
+    OverlayTrigger,
+    Row,
+    Tooltip
+} from "react-bootstrap";
 import "./ReadStory.css";
 import Comment from "../Components/Comment";
 import {MdShare, MdBookmark, MdOutlineAdd} from "react-icons/md";
@@ -26,6 +37,8 @@ function ReadStory() {
     //socials
     const [isBookmarked, setIsBookmarked] = useState (false);
     const [isLiked, setIsLiked] = useState (false);
+    const [isCopied, setIsCopied] = useState(false);
+    const target = useRef(null);
 
 
     //font size change
@@ -51,6 +64,7 @@ function ReadStory() {
     const handleLike = () => setIsLiked(!isLiked);
     const handleShare = () => {
         navigator.clipboard.writeText(window.location.href);
+        setIsCopied(!isCopied);
     }
 
     //firestore get doc by id
@@ -94,7 +108,15 @@ function ReadStory() {
             </p>
             <Image src={story.picture} width="50%" className="rounded my-2"/>
             <div id="Interactions" className="d-flex">
-                <Button className="btn ms-auto" onClick={handleShare}><MdShare/> Share </Button>
+                <Button className="btn ms-auto" onClick={handleShare} ref={target}><MdShare/> Share </Button>
+                <Overlay target={target.current} placement={'top'} show={isCopied}>
+                    {(props) => (
+                        <Tooltip {...props}>
+                            Link copied to clipboard!
+                        </Tooltip>
+                    )
+                    }
+                </Overlay>
                 <Button className="btn mx-1"
                         variant={isBookmarked ? "secondary" : "primary"}
                         onClick={handleBookmark}>
