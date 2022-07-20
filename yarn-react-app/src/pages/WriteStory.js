@@ -81,7 +81,7 @@ function WriteStory() {
                 authorId: auth.currentUser.uid,
                 year: form.year
             });
-            navigate("/");
+            navigate("/MyStories");
         } else {
             const imageRef = ref(storage, `storyImages/${imageUpload.name + Date.now()}`);
             uploadBytes(imageRef, imageUpload).then((snapshot) => {
@@ -93,7 +93,7 @@ function WriteStory() {
                         authorId: auth.currentUser.uid,
                         picture: url
                     });
-                    navigate("/");
+                    navigate("/MyStories");
                 })
             })
         }
