@@ -33,7 +33,7 @@ function WriteStory() {
 
         //title errors
         if (!title || title === '') newErrors.title = 'Please enter a title.'
-        else if (title.length > 70) newErrors.title = 'Title must be less than 70 characters'
+        else if (title.length > 70) newErrors.title = 'Title must be less than 70 characters.'
 
         //year errors
         if (!year || year === '') newErrors.year = 'Please enter a year.'

@@ -18,6 +18,7 @@ import {db} from "../firebase-config";
 import {IoMdHeart} from "react-icons/io";
 import {useLocation, useParams} from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
+import CommentForm from "../Components/CommentForm";
 
 function ReadStory() {
     const {id} = useParams();
@@ -65,7 +66,7 @@ function ReadStory() {
             try {
                 const data = await getDoc(docRef)
                     .then((doc) => {
-                        setStory({...doc.data()})
+                        setStory({...doc.data(), id: doc.id})
                         console.log(doc.data(), doc.id)
                     })
             } catch (error) {
@@ -114,6 +115,8 @@ function ReadStory() {
             </div>
             <hr/>
             <h4>Comments</h4>
+            <CommentForm data={story}/>
+
             <Comment/>
             <Comment/>
 
