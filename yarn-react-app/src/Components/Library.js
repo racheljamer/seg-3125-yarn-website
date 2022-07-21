@@ -4,6 +4,7 @@ import {db} from "../firebase-config";
 import Storybook from "./Storybook";
 import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
 import {MdOutlineSearch} from "react-icons/md";
+import {t} from "i18next";
 
 
 function Library() {
@@ -82,8 +83,8 @@ function Library() {
 
     return (
         <>
-            <h3 id="library">Library</h3>
-            <p>Use the search bar to filter results by the year the story occured. <br/>Suggestion: Do you want to read recent stories? Search 'during' '2022'.</p>
+            <h3 id="library">{t("library_header")}</h3>
+            <p>{t("library_text")}</p>
                 <Form>
                     <Row>
                         <Col xl={2}>
@@ -93,10 +94,10 @@ function Library() {
                                 onChange={e => setField('operand', e.target.value)}
                                 isInvalid={!!errors.operand}
                             >
-                                <option value=''>Search</option>
-                                <option value='<='>Before</option>
-                                <option value='=='>During</option>
-                                <option value='>='>After</option>
+                                <option value=''>{t("search_search")}</option>
+                                <option value='<='>{t("search_before")}</option>
+                                <option value='=='>{t("search_during")}</option>
+                                <option value='>='>{t("search_after")}</option>
                             </Form.Select>
                             <Form.Control.Feedback type='invalid'>
                                 {errors.name}
@@ -105,7 +106,7 @@ function Library() {
                         </Col>
                         <Col>
                             <InputGroup>
-                            <InputGroup.Text id="basic-addon1"><MdOutlineSearch/> Year </InputGroup.Text>
+                            <InputGroup.Text id="basic-addon1"><MdOutlineSearch/> {t("year")} </InputGroup.Text>
                             <Form.Control
                                 type="number"
                                 placeholder="yyyy"
@@ -113,9 +114,9 @@ function Library() {
                                 isInvalid={!!errors.year}
                             />
                             <Button variant="outline-primary" type="submit" onClick={handleSearchSubmit}>
-                                Search
+                                {t("search_search")}
                             </Button>
-                            <Button variant="outline-danger"onClick={() => setFilteredStoryList(null)}>Clear</Button>
+                            <Button variant="outline-danger"onClick={() => setFilteredStoryList(null)}>{t("search_clear")}</Button>
                                 <Form.Control.Feedback type="invalid">
                                     {errors.year}
                                 </Form.Control.Feedback>
