@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {collection, getDocs, deleteDoc, doc, query, where} from "firebase/firestore";
 import {db} from "../firebase-config";
 import Storybook from "./Storybook";
-import {Button, Col, Container, Form, InputGroup, Row} from "react-bootstrap";
+import {Button, Col, Form, InputGroup, Row} from "react-bootstrap";
 import {MdOutlineSearch} from "react-icons/md";
 import {t} from "i18next";
 

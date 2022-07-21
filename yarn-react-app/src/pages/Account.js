@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {Button, Col, Container, Form, Image, Row, Alert} from "react-bootstrap";
-import {MdUpload, MdSave} from "react-icons/md";
+import {MdSave} from "react-icons/md";
 import {auth, db} from "../firebase-config";
 import "./Account.css";
-import {addDoc, collection, getDocs, query, where} from "firebase/firestore";
+import {addDoc, collection} from "firebase/firestore";
 
 function Account() {
     const [userAccount, setUserAccount] = useState({});
@@ -62,14 +62,14 @@ function Account() {
 
     const handleReminderAlert = (e) => {
         setRemindTime(e)
-        console.log(remindTime)
+        //console.log(remindTime)
         setShowAlert(true);
     }
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
                 if (user) {
-                    console.log(user)
+                    //console.log(user)
                     setUserAccount(user);
                 }
             });

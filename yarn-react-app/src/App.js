@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Link, Navigate, Outlet, Route, Routes} from "react-router-dom";
+import {Navigate, Outlet, Route, Routes} from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import WriteStory from "./pages/WriteStory";

@@ -1,6 +1,5 @@
 import React from 'react'
-import {Button, Container, Image} from "react-bootstrap";
-import {MdReply} from "react-icons/md";
+import {Container, Image} from "react-bootstrap";
 
 function Comment(props) {
 

@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link} from "react-router-dom";
 import {Col, Container, Row, Button} from "react-bootstrap";
-import {collection, deleteDoc, doc, getDocs, query, where, collectionGroup} from "firebase/firestore";
+import {collection, deleteDoc, doc, getDocs} from "firebase/firestore";
 import {db, auth} from "../firebase-config";
 import Storybook from "../Components/Storybook";
 import {MdOutlineDelete} from "react-icons/md";

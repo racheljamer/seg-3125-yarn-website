@@ -2,21 +2,18 @@ import React, {useEffect, useRef, useState} from 'react';
 import {
     Button,
     ButtonGroup,
-    Col,
     Container,
     Image,
     Offcanvas,
     Overlay,
-    OverlayTrigger,
-    Row,
     Tooltip
 } from "react-bootstrap";
 import "./ReadStory.css";
 import Comment from "../Components/Comment";
-import {MdShare, MdBookmark, MdOutlineAdd} from "react-icons/md";
+import {MdShare, MdBookmark} from "react-icons/md";
 import {db} from "../firebase-config";
 import {IoMdHeart} from "react-icons/io";
-import {useLocation, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import {collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
 import CommentForm from "../Components/CommentForm";
 
@@ -43,7 +40,6 @@ function ReadStory({isAuth}) {
     const [showAuthor, setShowAuthor] = useState(false);
     const [story, setStory] = useState({});
     const [commentList, setCommentList] = useState([]);
-    const [author, setAuthor] = useState({}); //eventually need to show author bio
 
     const handleClose = () => setShowAuthor(false);
     const handleShow = (e) => {

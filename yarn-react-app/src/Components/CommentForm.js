@@ -2,13 +2,11 @@ import React, {useState} from 'react'
 import {addDoc, collection} from "firebase/firestore";
 import {Button, Form} from "react-bootstrap";
 import {db, auth} from "../firebase-config";
-import {upload} from "@testing-library/user-event/dist/upload";
 
 
 function CommentForm(props) {
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
-    const [commentTest, setCommentTest] = useState("");
 
     const setField = (field, value) => {
         setForm({

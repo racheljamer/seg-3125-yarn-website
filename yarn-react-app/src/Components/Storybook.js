@@ -1,7 +1,7 @@
 import React from 'react';
 import './storybook.css';
-import {Col, Button} from "react-bootstrap";
-import {MdOutlineAdd, MdOutlineDelete} from "react-icons/md";
+import {Col} from "react-bootstrap";
+import {MdOutlineAdd} from "react-icons/md";
 
 function Storybook(props) {
     return (
