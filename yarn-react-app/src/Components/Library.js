@@ -10,7 +10,7 @@ import {t} from "i18next";
 function Library() {
     const [storyList, setStoryList] = useState([]);
     const [filteredStoryList, setFilteredStoryList] = useState(null);
-    const storiesCollectionRef = collection(db, "teststories1");
+    const storiesCollectionRef = collection(db, "stories");
 
     const deleteStory = useCallback(async (id) => {
         const storyDoc = doc(db, "stories", id);

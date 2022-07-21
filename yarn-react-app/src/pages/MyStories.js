@@ -9,12 +9,12 @@ import {MdOutlineDelete} from "react-icons/md";
 function MyStories() {
     const [storyList, setStoryList] = useState([]);
 
-    const storiesCollectionRef = collection(db, "teststories1");
+    const storiesCollectionRef = collection(db, "stories");
 
     //call firebase to retrieve stories
 
     const deleteStory = useCallback(async (id) => {
-        const storyDoc = doc(db, "teststories1", id);
+        const storyDoc = doc(db, "stories", id);
         await deleteDoc(storyDoc);
         window.location.reload();
     }, []);

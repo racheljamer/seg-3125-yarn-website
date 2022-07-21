@@ -1,19 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Button, Col, Container, DropdownButton, Dropdown, Form, Image, InputGroup, Row, Alert} from "react-bootstrap";
+import {Button, Col, Container, Form, Image, Row, Alert} from "react-bootstrap";
 import {MdUpload, MdSave} from "react-icons/md";
 import {auth, db} from "../firebase-config";
-import {Navigate, useNavigate} from "react-router-dom";
 import "./Account.css";
 import {addDoc, collection, getDocs, query, where} from "firebase/firestore";
-import {upload} from "@testing-library/user-event/dist/upload";
-
-//auth.currentUser.displayName, id:auth.currentUser.uid <= import auth from firebase to access first name and such
 
 function Account() {
     const [userAccount, setUserAccount] = useState({});
     const [showAlert, setShowAlert] = useState(false);
     const [remindTime, setRemindTime] = useState("");
-    const [bio, setBio] = useState({});
 
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});

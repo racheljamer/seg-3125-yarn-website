@@ -74,6 +74,7 @@ function CommentForm(props) {
                         onChange={e => setField('commentText', e.target.value)}
                         isInvalid = {!!errors.commentText}
                         className="mb-1"
+                        readOnly={!props.isAuth}
                     />
                     <Form.Control.Feedback type="invalid">
                         {errors.commentText}

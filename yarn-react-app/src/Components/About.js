@@ -2,12 +2,7 @@ import React from 'react';
 import {Col, Image, Row} from "react-bootstrap";
 import {MdMenuBook} from "react-icons/md";
 import {t} from "i18next";
-
-//strings (to be exported to a string file later?)
-const aboutStr = "Everyone has a story to tell, and here - you can read it. " +
-    "Family stories, passed down through generations of storytellers around the" +
-    " world, are stored in Yarn's virtual library. We aim to provide a place to " +
-    "explore, read, and share your story with friends and family.";
+import peopleReading from "../images/whitepeoplereadingabook.jpg"
 
 function About() {
     return (
@@ -24,7 +19,7 @@ function About() {
                     <p>{t("write_text")} <a href="/WriteStory">{t("write_link")}</a></p>
                 </Col>
                 <Col>
-                    <Image rounded src="https://picsum.photos/600/400"/>
+                    <Image rounded width="600" src={peopleReading}/>
                 </Col>
             </Row>
         </div>

@@ -60,7 +60,7 @@ function ReadStory({isAuth}) {
     }
 
     //firestore get story doc by id
-    const docRef = doc(db, 'teststories1', id);
+    const docRef = doc(db, 'stories', id);
     const commentsRef = collection(db, 'comments');
     const q = query(commentsRef, where("storyId", "==", id));
 
@@ -143,11 +143,11 @@ function ReadStory({isAuth}) {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     <div align="center">
-                        <Image className="w-75" thumbnail src="https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png"/>
+                        <Image className="w-75" thumbnail src={story.authorPic}/>
                         <h4 className="mt-2">{story.authorName}</h4>
                     </div>
                     <h5>Biography</h5>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam rhoncus accumsan ante at varius. Donec odio erat, efficitur non mauris eget, egestas euismod magna. Duis ac felis ac nisl tempor venenatis vitae eget turpis.</p>
+                    <p>{story.authorName} is an illustrious author.</p>
                 </Offcanvas.Body>
             </Offcanvas>
 
