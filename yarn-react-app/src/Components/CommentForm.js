@@ -8,6 +8,7 @@ import {upload} from "@testing-library/user-event/dist/upload";
 function CommentForm(props) {
     const [form, setForm] = useState({});
     const [errors, setErrors] = useState({});
+    const [commentTest, setCommentTest] = useState("");
 
     const setField = (field, value) => {
         setForm({
@@ -28,7 +29,7 @@ function CommentForm(props) {
 
         //comment errors
         if (!commentText || commentText === '') newErrors.commentText = 'Comment must have text.'
-        else if (commentText.length > 70) newErrors.commentText = 'Comment must be less than 800 characters.'
+        else if (commentText.length > 800) newErrors.commentText = 'Comment must be less than 800 characters.'
 
         return newErrors
     }
@@ -42,23 +43,24 @@ function CommentForm(props) {
         } else {
             //no errors - submit comment to firebase!
             uploadComment();
-
         }
     }
     const commentCollectionRef = collection(db, "comments");
 
-    const uploadComment = () => {
+    const uploadComment = async () => {
         const timestamp = new Date();
         const timestampString =
             timestamp.getHours() + ':' + (timestamp.getMinutes() < 10 ? "0"+timestamp.getMinutes(): timestamp.getMinutes()) + ", " +
             timestamp.getFullYear() + '-' + (timestamp.getMonth()+1) + "-" + timestamp.getDate();
 
-        const docRef = addDoc(commentCollectionRef, {
+        const docRef = await addDoc(commentCollectionRef, {
             storyId: props.id,
             commenterName: auth.currentUser.displayName,
+            commenterPic: auth.currentUser.photoURL,
             commentTime: timestampString,
             commentText: form.commentText
-        })
+        });
+        window.location.reload();
     }
 
     return (

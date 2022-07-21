@@ -17,7 +17,7 @@ import {MdShare, MdBookmark, MdOutlineAdd} from "react-icons/md";
 import {db} from "../firebase-config";
 import {IoMdHeart} from "react-icons/io";
 import {useLocation, useParams} from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import {collection, doc, getDoc, getDocs, query, where} from "firebase/firestore";
 import CommentForm from "../Components/CommentForm";
 
 function ReadStory({isAuth}) {
@@ -42,6 +42,7 @@ function ReadStory({isAuth}) {
     //Author Off-canvas
     const [showAuthor, setShowAuthor] = useState(false);
     const [story, setStory] = useState({});
+    const [commentList, setCommentList] = useState([]);
     const [author, setAuthor] = useState({}); //eventually need to show author bio
 
     const handleClose = () => setShowAuthor(false);
@@ -60,6 +61,8 @@ function ReadStory({isAuth}) {
 
     //firestore get story doc by id
     const docRef = doc(db, 'teststories1', id);
+    const commentsRef = collection(db, 'comments');
+    const q = query(commentsRef, where("storyId", "==", id));
 
     useEffect(() => {
         const getStory = async() => {
@@ -67,14 +70,23 @@ function ReadStory({isAuth}) {
                 const data = await getDoc(docRef)
                     .then((doc) => {
                         setStory({...doc.data(), id: doc.id})
-                        console.log(doc.data(), doc.id)
                     })
             } catch (error) {
                 console.log(error);
             }
         }
+        const getComments = async() => {
+            try {
+                const data = await getDocs(q);
+                setCommentList(data.docs.map(doc => ({...doc.data(), cId: doc.id})));
+            } catch (e) {
+                console.log(e)
+            }
+        }
         getStory();
+        getComments();
     }, [])
+
 
     return (
         <Container>
@@ -116,9 +128,14 @@ function ReadStory({isAuth}) {
             <hr/>
             <h4>Comments</h4>
             <CommentForm id={story.id} isAuth={isAuth}/>
-
-            <Comment/>
-            <Comment/>
+            {commentList.map((comment) => {
+                return <Comment
+                    name={comment.commenterName}
+                    time={comment.commentTime}
+                    text={comment.commentText}
+                    picture={comment.commenterPic}
+                />
+            })}
 
             <Offcanvas show={showAuthor} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
