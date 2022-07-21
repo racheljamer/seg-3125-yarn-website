@@ -65,7 +65,7 @@ function App() {
                             )}
                         <NavDropdown title={t("language")}>
                             <NavDropdown.Item eventKey="en">English</NavDropdown.Item>
-                            <NavDropdown.Item eventKey="fr">French</NavDropdown.Item>
+                            <NavDropdown.Item eventKey="fr">Français</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
